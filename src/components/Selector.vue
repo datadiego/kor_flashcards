@@ -16,13 +16,18 @@ export default {
       leccion: 'value1'
     }
   },
+    methods: {
+        cargarLeccion(leccion){
+            console.log(leccion)
+        }
+    },
   mounted() {
       console.log(this.leccion)
     },
     watch:{
         leccion(anteriorLeccion, nuevaLeccion){
             if(anteriorLeccion !== nuevaLeccion){
-                console.log(this.leccion)
+                cargarLeccion(this.leccion)
             }
         }
     }
