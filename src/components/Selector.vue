@@ -17,8 +17,8 @@ export default {
     }
   },
     methods: {
-        cargarLeccion(leccion){
-            console.log(leccion)
+        cargarLeccion(){
+            console.log(this.leccion)
         }
     },
   mounted() {
@@ -27,7 +27,7 @@ export default {
     watch:{
         leccion(anteriorLeccion, nuevaLeccion){
             if(anteriorLeccion !== nuevaLeccion){
-                cargarLeccion(this.leccion)
+                this.cargarLeccion()
             }
         }
     }
