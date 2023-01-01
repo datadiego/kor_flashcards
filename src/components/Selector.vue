@@ -1,9 +1,9 @@
 <template>
     <div>
         <select v-model="leccion" name="select">
-            <option value="value1" selected>Leccion 1</option>
-            <option value="value2">Leccion 2</option>
-            <option value="value3">Leccion 3</option>
+            <option value="1" selected>Leccion 1</option>
+            <option value="2">Leccion 2</option>
+            <option value="3">Leccion 3</option>
           </select>
     </div>
 </template>
@@ -13,22 +13,12 @@ export default {
 
   data() {
     return {
-      leccion: 'value1'
+      leccion: '1'
     }
   },
-    methods: {
-        cargarLeccion(){
-            console.log(this.leccion)
-        }
-    },
-  mounted() {
-      console.log(this.leccion)
-    },
     watch:{
-        leccion(anteriorLeccion, nuevaLeccion){
-            if(anteriorLeccion !== nuevaLeccion){
-                this.cargarLeccion()
-            }
+        leccion(nuevaLeccion, anteriorLeccion){
+            this.$emit('leccion-cambiada', nuevaLeccion)
         }
     }
 }
