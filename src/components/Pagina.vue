@@ -2,11 +2,12 @@
     <div>
         <h1>🥬 Kimchi Cards 🥬</h1>
         <Selector @leccion-cambiada="actualizarLeccion" />
-
-        <h2>{{ leccion_actual }}</h2>
-        <!-- <Selector/> -->
-        <h2>Simbolo</h2>
-        <Opciones/>
+        <div v-if="leccion_cargada">
+            <h2 v-if="tipo_ronda_actual=='caracter_significado'">{{preguntas[0].caracter}}</h2>
+            <h2 v-else>{{preguntas[0].significado}}</h2>
+        </div>
+        <h2 v-else>Selecciona una lección para empezar</h2>
+        <Opciones :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
     </div>
 </template>
 
@@ -14,13 +15,20 @@
 import Selector from './Selector.vue'
 import Opciones from './Opciones.vue'
 
+import leccion1 from '../assets/coreano1.csv'
+import leccion2 from '../assets/coreano2.csv'
+
 export default {
     name: 'Pagina',
     data(){
         return{
             leccion_actual: "1",
-            preguntas: null,
+            preguntas: [],
             pregunta_actual: null,
+            leccion_cargada: false,
+            tipos_ronda: ['caracter_significado','significado_caracter'],
+            tipo_ronda_actual: null,
+            
         }
     },
     methods:{
@@ -31,15 +39,31 @@ export default {
         getLeccion(){
             console.log(this.leccion_actual)
             if(this.leccion_actual == '1'){
-                //cargar desde csv
-                console.log("Cargando csv", this.leccion_actual)
-        }
+                console.log("Cargando csv")
+                //almacenar en preguntas las 4 primeras palabras
+                this.preguntas = leccion1.slice(0,4)
+                this.leccion_cargada = true
+            }
+            else if(this.leccion_actual == '2'){
+                console.log("Cargando csv")
+                //almacenar en preguntas las 4 primeras palabras
+                this.preguntas = leccion2.slice(0,4)
+                console.log(this.preguntas)
+            }
+            else{
+                console.log("No hay leccion")
+            }
     }
 },
     components: {
         Selector,
         Opciones
     },
+    beforeMount(){
+        const randint = Math.floor(Math.random() * this.tipos_ronda.length)
+        this.tipo_ronda_actual = this.tipos_ronda[randint]
+        console.log(this.tipo_ronda_actual)
+    }
     
 }
 </script>
