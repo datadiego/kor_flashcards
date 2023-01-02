@@ -46,11 +46,13 @@ li{
     display:inline-block;
     padding: 10px;
     margin: 10px;
-    border: 1px solid black;
+    border: 6px solid rgb(0, 69, 78);
+    border-radius: 12px;
     background-color: aquamarine;
     list-style: none;
     width: 200px;
     text-align: center;
+    font-size: 20px;
 }
 li:hover{
     background-color: lightblue;
