@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page-cointainer">
         <h1>🥬 Kimchi Cards 🥬</h1>
         <Selector @leccion-cambiada="actualizarLeccion" />
         <div v-if="leccion_cargada">
@@ -8,7 +8,7 @@
         </div>
         <div v-if="!leccion_cargada">
             <h2>Selecciona una lección para empezar</h2>
-
+            
         </div>
         <Opciones :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
     </div>
@@ -67,5 +67,12 @@ export default {
 </script>
 
 <style>
-
+.page-cointainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f5f5f5;
+}
 </style>

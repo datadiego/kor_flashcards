@@ -33,5 +33,27 @@ export default {
 </script>
 
 <style>
-
+ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+li{
+    display:inline-block;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    background-color: aquamarine;
+    list-style: none;
+    width: 200px;
+    text-align: center;
+}
+li:hover{
+    background-color: lightblue;
+}
+li:active{
+    background-color: lightgreen;
+}
 </style>

@@ -2,8 +2,8 @@
     <div>
         <select v-model="leccion" name="select">
             <option value="0" hidden disabled>Elige una lección</option>
-            <option value="1">Leccion 1</option>
-            <option value="2">Leccion 2</option>
+            <option value="1">Caracteres básicos</option>
+            <option value="2">Colores</option>
             <option value="3">Leccion 3</option>
           </select>
     </div>
@@ -26,5 +26,11 @@ export default {
 </script>
 
 <style>
-
+select{
+    min-width: 200px;
+    height: 50px;
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+}
 </style>
