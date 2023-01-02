@@ -13,8 +13,8 @@
         </div>
         <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
 
+        <h2 v-if="flag_ronda_terminada" id="respuesta">{{mensaje}}</h2>
         <button v-if="flag_ronda_terminada" @click="getLeccion">Siguiente</button>
-        <h2 v-if="flag_ronda_terminada">{{mensaje}}</h2>
 
     </div>
 </template>
@@ -72,7 +72,10 @@ export default {
             this.leccion_cargada = true
     },
     checkAnswer(respuesta){
-        
+        if(this.flag_ronda_terminada){
+            return
+        }
+        else{
         if(this.tipo_ronda_actual == 'caracter_significado'){
             if(respuesta == this.pregunta_actual.significado){
                 this.aciertos += 1
@@ -93,9 +96,9 @@ export default {
                 this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
             }
         }
-        const randint = Math.floor(Math.random() * this.preguntas.length)
-        this.pregunta_actual = this.preguntas[randint]
+
         this.flag_ronda_terminada = true
+    }
     }
 },
     components: {
@@ -125,14 +128,17 @@ export default {
     background-color: #f5f5f5;
     text-align: center;
 }
-
+#respuesta{
+    font-size: 30px;
+    margin-top: 0px;
+}
 #pregunta_actual{
     background-color: aquamarine;
     font-size: 50px;
     border-radius: 30px;
     border: 6px solid rgb(0, 69, 78);
-    padding: 26px;
+    padding: 12px;
     margin: 20px;
-    min-width: 300px;
+    min-width: 100px;
 }
 </style>
