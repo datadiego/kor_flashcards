@@ -1,7 +1,10 @@
-palabra,significado
-Goyangi,"Gato"
-Gae,"Perro"
-Jip,"Casa"
-Sigyeong,"Despedida"
-Jeonui,"Humano"
-Hangeul,"Alfabeto coreano"
+caracter,pronunciacion,significado,id
+ㅡㅣ,hwe,"blanco",1
+ㅇㅡㄹ,ireum,"rojo",2
+ㅅㅜ,su,"amarillo",3
+ㅊㅜ,chwi,"verde",4
+ㅁㅗ,mo,"azul",5
+ㅎㅐㅎ,hakh,"marron",6
+ㅎㅜ,hu,"púrpura",7
+ㅂㅜㅇ,bun,"rosado",8
+ㅅㅜㅎ,suh,"gris",9

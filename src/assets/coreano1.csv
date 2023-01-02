@@ -1,9 +1,27 @@
-palabra,significado
-Annyeonghaseyo,"Hola"
-Je ireumeun,"Mi nombre es"
-Jeoneun,"Yo soy"
-Saram,"Persona"
-Namu,"Árbol"
-Gang,"Río"
-Sagwa,"Manzana"
+caracter,pronunciacion,significado,id
+ㄱ,giyeok,"g, k",1
+ㄴ,nieun,"n",2
+ㄷ,digeut,"d, t",3
+ㄹ,rieul,"r, l",4
+ㅁ,mieum,"m",5
+ㅂ,bieup,"b, p",6
+ㅅ,siot,"s",7
+ㅇ,ieung,"ng (sin sonido)",8
+ㅈ,jieut,"j",9
+ㅊ,chieut,"ch",10
+ㅋ,kieuk,"k",11
+ㅌ,tieut,"t",12
+ㅍ,pieup,"p",13
+ㅎ,hieut,"h",14
+ㅏ,a,"a",15
+ㅑ,ya,"ya",16
+ㅓ,eo,"eo",17
+ㅕ,yeo,"yeo",18
+ㅗ,o,"o",19
+ㅛ,yo,"yo",20
+ㅜ,u,"u",21
+ㅠ,yu,"yu",22
+ㅡ,eu,"eu",23
+ㅣ,i,"i",24
+
 
