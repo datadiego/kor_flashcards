@@ -12,7 +12,7 @@
             
         </div>
         <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
-
+        
         <h2 v-if="flag_ronda_terminada" id="respuesta">{{mensaje}}</h2>
         <button v-if="flag_ronda_terminada" @click="getLeccion">Siguiente</button>
 
@@ -130,7 +130,8 @@ export default {
 }
 #respuesta{
     font-size: 30px;
-    margin-top: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 #pregunta_actual{
     background-color: aquamarine;
@@ -138,7 +139,35 @@ export default {
     border-radius: 30px;
     border: 6px solid rgb(0, 69, 78);
     padding: 12px;
-    margin: 20px;
+    margin: 0px;
     min-width: 100px;
+}
+
+button{
+    margin: 0;
+    background-color: rgb(1, 160, 181);
+    color: white;
+    font-size: 20px;
+    border-radius: 12px;
+    border: 6px solid rgb(0, 69, 78);
+    padding: 12px;
+    min-width: 100px;
+}
+
+@media screen and (max-width: 600px){
+    #pregunta_actual{
+        font-size: 60px;
+        margin: 20px;
+    }
+    #respuesta{
+        font-size: 20px;
+    }
+    button{
+        font-size: 15px;
+    }
+    h1, h2{
+        margin:10px;
+    }
+    
 }
 </style>

@@ -33,4 +33,15 @@ select{
     padding: 10px;
     text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+  select{
+    min-width: 100px;
+    height: 30px;
+    font-size: 10px;
+    padding: 5px;
+    text-align: center;}
+}
+
+
 </style>

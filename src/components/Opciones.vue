@@ -41,6 +41,8 @@ ul{
     justify-content: center;
     align-items: center;
     padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
 }
 li{
     display:inline-block;
@@ -59,5 +61,12 @@ li:hover{
 }
 li:active{
     background-color: lightgreen;
+}
+
+@media screen and (max-width: 600px) {
+    li{
+        width: 100px;
+        margin: 5px;
+    }
 }
 </style>
