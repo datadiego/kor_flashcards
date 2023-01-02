@@ -11,7 +11,7 @@
             <h2>Selecciona una lección para empezar</h2>
             
         </div>
-        <Opciones :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
+        <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
     </div>
 </template>
 
@@ -34,7 +34,8 @@ export default {
             tipos_ronda: ['caracter_significado','significado_caracter'],
             tipo_ronda_actual: null,
             aciertos: 0,
-            fallos: 0
+            fallos: 0,
+            flag_ronda_terminada: false,
             
         }
     },
@@ -56,6 +57,29 @@ export default {
             const randint = Math.floor(Math.random() * this.preguntas.length)
             this.pregunta_actual = this.preguntas[randint]
             this.leccion_cargada = true
+    },
+    checkAnswer(respuesta){
+        if(this.flag_ronda_terminada){
+            return undefined
+        }
+        if(this.tipo_ronda_actual == 'caracter_significado'){
+            if(respuesta == this.pregunta_actual.significado){
+                this.aciertos += 1
+            }
+            else{
+                this.fallos += 1
+            }
+        }
+        else{
+            if(respuesta == this.pregunta_actual.caracter){
+                this.aciertos += 1
+            }
+            else{
+                this.fallos += 1
+            }
+        }
+        const randint = Math.floor(Math.random() * this.preguntas.length)
+        this.pregunta_actual = this.preguntas[randint]
     }
 },
     components: {
