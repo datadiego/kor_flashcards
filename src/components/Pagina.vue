@@ -3,10 +3,13 @@
         <h1>🥬 Kimchi Cards 🥬</h1>
         <Selector @leccion-cambiada="actualizarLeccion" />
         <div v-if="leccion_cargada">
-            <h2 v-if="tipo_ronda_actual=='caracter_significado'">{{preguntas[0].caracter}}</h2>
-            <h2 v-else>{{preguntas[0].significado}}</h2>
+            <h2 v-if="tipo_ronda_actual=='caracter_significado'">{{ pregunta_actual.caracter }}</h2>
+            <h2 v-else>{{ pregunta_actual.significado }}</h2>
         </div>
-        <h2 v-else>Selecciona una lección para empezar</h2>
+        <div v-if="!leccion_cargada">
+            <h2>Selecciona una lección para empezar</h2>
+
+        </div>
         <Opciones :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
     </div>
 </template>
@@ -37,22 +40,18 @@ export default {
             this.getLeccion()
         },
         getLeccion(){
-            console.log(this.leccion_actual)
             if(this.leccion_actual == '1'){
-                console.log("Cargando csv")
-                //almacenar en preguntas las 4 primeras palabras
                 this.preguntas = leccion1.slice(0,4)
-                this.leccion_cargada = true
             }
             else if(this.leccion_actual == '2'){
-                console.log("Cargando csv")
-                //almacenar en preguntas las 4 primeras palabras
                 this.preguntas = leccion2.slice(0,4)
-                console.log(this.preguntas)
             }
             else{
-                console.log("No hay leccion")
+                console.log("Cargamos leccion", this.leccion_actual)
             }
+            const randint = Math.floor(Math.random() * this.preguntas.length)
+            this.pregunta_actual = this.preguntas[randint]
+            this.leccion_cargada = true
     }
 },
     components: {
@@ -62,8 +61,7 @@ export default {
     beforeMount(){
         const randint = Math.floor(Math.random() * this.tipos_ronda.length)
         this.tipo_ronda_actual = this.tipos_ronda[randint]
-        console.log(this.tipo_ronda_actual)
-    }
+    },
     
 }
 </script>
