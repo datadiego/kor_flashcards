@@ -1,6 +1,6 @@
 <template>
     <div class="page-cointainer">
-        <h1>🥬 Kimchi Cards 🥬</h1>
+        <h1 id="kimchichards">🥬 Kimchi Cards 🥬</h1>
         <Selector @leccion-cambiada="actualizarLeccion" />
         <div v-if="leccion_cargada">
             <Puntos :aciertos="aciertos" :fallos="fallos" />
@@ -9,7 +9,6 @@
         </div>
         <div v-if="!leccion_cargada">
             <h2>Selecciona una lección para empezar</h2>
-            
         </div>
         <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
         
@@ -109,7 +108,7 @@ export default {
     beforeMount(){
         const randint = Math.floor(Math.random() * this.tipos_ronda.length)
         this.tipo_ronda_actual = this.tipos_ronda[randint]
-
+        
     },
     mounted(){
         this.actualizarLeccion(this.leccion_actual)
@@ -119,41 +118,57 @@ export default {
 </script>
 
 <style>
+body{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    color: #ff00ff;
+    padding: 0;
+}
+
 .page-cointainer{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
     width: 100vw;
-    background-color: #f5f5f5;
+    background-color: #ff9cf7;
     text-align: center;
 }
 #respuesta{
     font-size: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    color: #212121;
 }
 #pregunta_actual{
-    background-color: aquamarine;
+    background-color: #ff00ff  ;
+    color: #212121 ;
+    border: 6px solid #a000a0;
+    box-shadow: 0px 8px 0px #550044;
     font-size: 50px;
-    border-radius: 30px;
-    border: 6px solid rgb(0, 69, 78);
+    border-radius: 10px;
     padding: 12px;
     margin: 0px;
     min-width: 100px;
+    margin-bottom: 20px;
+    
 }
 
 button{
     margin: 0;
-    background-color: rgb(1, 160, 181);
-    color: white;
+    background-color: #ff00ff;
+    border: 6px solid #a000a0;
+    color: #212121;
+    box-shadow: 3px 3px 0px #550044;
     font-size: 20px;
     border-radius: 12px;
-    border: 6px solid rgb(0, 69, 78);
     padding: 12px;
     min-width: 100px;
 }
-
+#kimchicards{
+    color: #ffd54f
+}
 @media screen and (max-width: 600px){
     #pregunta_actual{
         font-size: 60px;

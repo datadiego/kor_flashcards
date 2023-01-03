@@ -48,16 +48,20 @@ li{
     display:inline-block;
     padding: 10px;
     margin: 10px;
-    border: 6px solid rgb(0, 69, 78);
     border-radius: 12px;
-    background-color: aquamarine;
     list-style: none;
     width: 200px;
     text-align: center;
     font-size: 20px;
+    background-color: #ff00ff;
+    color: #212121;
+    border: 6px solid #a000a0;
+    box-shadow: 3px 3px 0px #550044;
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 li:hover{
-    background-color: lightblue;
+    background-color: #ffa7ff;
 }
 li:active{
     background-color: lightgreen;

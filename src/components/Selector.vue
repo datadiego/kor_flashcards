@@ -28,17 +28,21 @@ export default {
 <style>
 select{
     min-width: 200px;
-    height: 50px;
+    height: auto;
     font-size: 20px;
     padding: 10px;
     text-align: center;
+    background-color: #ff00ff;
+    color: #212121;
+    border: 6px solid #a000a0;
+    box-shadow: 3px 3px 0px #550044;
+    border-radius: 12px;
 }
 
 @media screen and (max-width: 600px) {
   select{
     min-width: 100px;
-    height: 30px;
-    font-size: 10px;
+    font-size: 20px;
     padding: 5px;
     text-align: center;}
 }
