@@ -5,14 +5,14 @@
             v-if="tipo_ronda == 'caracter_significado'"
             v-for="opcion in opciones_ronda"
             :key="opcion.id"
-            @click="$emit('select', opcion.significado)"
+            @click="$emit('select', opcion)"
             >{{opcion.significado}}</li>
             
             <li
             v-if="tipo_ronda == 'significado_caracter'"
             v-for="opcion in opciones_ronda"
             :key="opcion.id"
-            @click="$emit('select', opcion.caracter)"
+            @click="$emit('select', opcion)"
             >{{opcion.caracter}}</li>
         </ul>
     </div>
