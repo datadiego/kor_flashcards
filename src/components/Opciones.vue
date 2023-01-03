@@ -47,7 +47,6 @@ ul{
 li{
     display:inline-block;
     padding: 10px;
-    margin: 10px;
     border-radius: 12px;
     list-style: none;
     width: 200px;
