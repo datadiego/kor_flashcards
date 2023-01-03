@@ -5,8 +5,13 @@
             <div v-if="leccion_cargada">
                 <Puntos :aciertos="aciertos" :fallos="fallos" />
                 <div v-if="estado_respuesta=='esperando'">
-                    <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
-                    <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>                    
+                    <h2 v-if="tipo_ronda_actual=='hangul_coreano'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
+                    <h2 v-if="tipo_ronda_actual=='hangul_español'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
+                    <h2 v-if="tipo_ronda_actual=='coreano_español'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
+                    <h2 v-if="tipo_ronda_actual=='coreano_hangul'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
+                    <h2 v-if="tipo_ronda_actual=='español_coreano'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
+                    <h2 v-if="tipo_ronda_actual=='español_hangul'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
+                                       
                 </div>
                 <div v-else-if="estado_respuesta=='correcto'">
                     <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_correcta" >{{mensaje}} </h2>
@@ -22,9 +27,12 @@
             </div>
             <OpcionesRespuesta @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
         </div>
-        <h1>⚙️ Opciones ⚙️</h1>
-        <SelectorLeccion @leccion-cambiada="actualizarLeccion" />
-        <SelectorTipoPregunta @leccion-cambiada="actualizarLeccion" />
+        <div>
+            <h1>⚙️ Opciones ⚙️</h1>
+            <SelectorTipoPregunta @tipo-pregunta-cambiada="actualizarTipoPreguntas" />
+            <SelectorLeccion @leccion-cambiada="actualizarLeccion" />
+
+        </div>
 
     </div>
 </template>
@@ -50,6 +58,7 @@ export default {
             pregunta_actual: null,
             leccion_cargada: false,
             tipos_ronda: ['aleatorio', 'hangul_español','hangul_coreano','coreano_español', 'coreano_hangul', 'español_hangul', 'español_coreano'],
+            tipo_ronda_seleccionada: 'aleatorio',
             tipo_ronda_actual: 'aleatorio',
             aciertos: 0,
             fallos: 0,
@@ -71,6 +80,10 @@ export default {
             this.leccion_actual = nuevaLeccion
             this.getPregunta()
         },
+        actualizarTipoPreguntas(nuevoTipo){
+            this.tipo_ronda_seleccionada = nuevoTipo
+            this.getPregunta()
+        },
         shuffle(array) {
         array.sort(() => Math.random() - 0.5)
             },
@@ -82,18 +95,19 @@ export default {
                 this.flag_primera_ronda = false
             }
             this.flag_ronda_terminada = false
-            if(this.tipo_ronda_actual == "aleatorio"){
-                const randint = Math.floor(Math.random() * this.tipos_ronda.length)
+            if(this.tipo_ronda_seleccionada == "aleatorio"){
+                console.log("Es tipo aleatorio")
+                const randint = Math.floor(Math.random() * (this.tipos_ronda.length - 1)) + 1;
                 this.tipo_ronda_actual = this.tipos_ronda[randint]
+                console.log("El tipo de ronda actual es: ", this.tipo_ronda_actual)
             }
             else{
-                if(this.tipo_ronda_actual == "caracter_significado"){
-                    this.tipo_ronda_actual = "significado_caracter"
-                }
-                else{
-                    this.tipo_ronda_actual = "caracter_significado"
-                }
+                console.log("no es aleatoria la ronda")
+                this.tipo_ronda_actual = this.tipo_ronda_seleccionada
+                console.log("El tipo de ronda actual es: ", this.tipo_ronda_actual)
             }
+
+            
             for (let i = 0; i < this.lecciones.length; i++) {
                 if(this.leccion_actual == i+1){ 
                     this.shuffle(this.lecciones[i])

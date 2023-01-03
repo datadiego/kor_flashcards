@@ -2,18 +2,48 @@
     <div>
         <ul>
             <li
-            v-if="tipo_ronda == 'caracter_significado'"
+            v-if="tipo_ronda == 'hangul_español'"
             v-for="opcion in opciones_ronda"
             :key="opcion.id"
             @click="$emit('select', opcion)"
             >{{opcion.significado}}</li>
             
             <li
-            v-if="tipo_ronda == 'significado_caracter'"
+            v-if="tipo_ronda == 'hangul_coreano'"
+            v-for="opcion in opciones_ronda"
+            :key="opcion.id"
+            @click="$emit('select', opcion)"
+            >{{opcion.pronunciacion}}</li>
+
+            <li
+            v-if="tipo_ronda == 'coreano_hangul'"
             v-for="opcion in opciones_ronda"
             :key="opcion.id"
             @click="$emit('select', opcion)"
             >{{opcion.caracter}}</li>
+
+            <li
+            v-if="tipo_ronda == 'coreano_español'"
+            v-for="opcion in opciones_ronda"
+            :key="opcion.id"
+            @click="$emit('select', opcion)"
+            >{{opcion.significado}}</li>
+
+            <li
+            v-if="tipo_ronda == 'español_hangul'"
+            v-for="opcion in opciones_ronda"
+            :key="opcion.id"
+            @click="$emit('select', opcion)"
+            >{{opcion.caracter}}</li>
+
+            <li
+            v-if="tipo_ronda == 'español_coreano'"
+            v-for="opcion in opciones_ronda"
+            :key="opcion.id"
+            @click="$emit('select', opcion)"
+            >{{opcion.pronunciacion}}</li>
+
+
         </ul>
     </div>
 </template>
