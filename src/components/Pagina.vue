@@ -4,13 +4,17 @@
         <div id="juego">
             <div v-if="leccion_cargada">
                 <Puntos :aciertos="aciertos" :fallos="fallos" />
-                <div v-if="!flag_ronda_terminada">
+                <div v-if="estado_respuesta=='esperando'">
                     <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
                     <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>                    
                 </div>
-                <div v-else>
-                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta" >{{mensaje}} </h2>
-                    <p v-else @click="getPregunta" id="respuesta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
+                <div v-else-if="estado_respuesta=='correcto'">
+                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_correcta" >{{mensaje}} </h2>
+                    <p v-else @click="getPregunta" id="respuesta_correcta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
+                </div>
+                <div v-else-if="estado_respuesta=='incorrecto'">
+                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_incorrecta" >{{mensaje}} </h2>
+                    <p v-else @click="getPregunta" id="respuesta_incorrecta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
                 </div>
             </div>
             <div v-if="!leccion_cargada">
@@ -46,6 +50,7 @@ export default {
             mensaje: "",
             flag_ronda_terminada: false,
             flag_primera_ronda: true,
+            estado_respuesta: "esperando",
             numero_ronda: 0,
             leccion1: leccion1,
             leccion2: leccion2
@@ -61,7 +66,7 @@ export default {
         array.sort(() => Math.random() - 0.5)
             },
         getPregunta(){
-
+            this.estado_respuesta = "esperando"
             this.numero_ronda += 1
             console.log(this.numero_ronda)
             if(this.numero_ronda === 2){
@@ -85,27 +90,29 @@ export default {
             this.leccion_cargada = true
     },
     checkAnswer(respuesta){
+        const mensaje_aux = `${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
         if(!this.flag_ronda_terminada){
             if(this.tipo_ronda_actual == 'caracter_significado'){
                 if(respuesta == this.pregunta_actual.significado){
                     this.aciertos += 1
-                    this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                    this.estado_respuesta = "correcto"
                 }
                 else{
                     this.fallos += 1
-                    this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                    this.estado_respuesta = "incorrecto"
                 }
             }
             else if(this.tipo_ronda_actual == 'significado_caracter'){
                 if(respuesta == this.pregunta_actual.caracter){
                     this.aciertos += 1
-                    this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                    this.estado_respuesta = "correcto"
                 }
                 else{
                     this.fallos += 1
-                    this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                    this.estado_respuesta = "incorrecto"
                 }
             }
+            this.mensaje = mensaje_aux
             this.flag_ronda_terminada = true
         }
     }
@@ -222,11 +229,30 @@ button{
         color: #212121 ;
         border: 6px solid #a000a0;
         box-shadow: 0px 8px 0px #550044;
-        font-size: 20px;
+        font-size: 30px;
         border-radius: 10px;
         padding: 12px;
         margin: 20px;
-        min-width: 100px;
+    }
+    #respuesta_correcta{
+        background-color: #81ffa1  ;
+        color: #212121 ;
+        border: 6px solid #a000a0;
+        box-shadow: 0px 8px 0px #550044;
+        font-size: 30px;
+        border-radius: 10px;
+        padding: 12px;
+        margin: 20px;
+    }
+    #respuesta_incorrecta{
+        background-color: #ff6a6a  ;
+        color: #212121 ;
+        border: 6px solid #a000a0;
+        box-shadow: 0px 8px 0px #550044;
+        font-size: 30px;
+        border-radius: 10px;
+        padding: 12px;
+        margin: 20px;
     }
     button{
         font-size: 15px;
