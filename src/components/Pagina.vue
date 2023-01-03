@@ -4,21 +4,22 @@
         <div id="juego">
             <div v-if="leccion_cargada">
                 <Puntos :aciertos="aciertos" :fallos="fallos" />
-                <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
-                <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
+                <div v-if="!flag_ronda_terminada">
+                    <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
+                    <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>                    
+                </div>
+                <div v-else>
+                    <h2 @click="getPregunta" id="respuesta">{{mensaje}}</h2>
+                </div>
             </div>
             <div v-if="!leccion_cargada">
                 <h2>Selecciona una lección para empezar</h2>
             </div>
             <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
-            <div v-show="flag_ronda_terminada" class="clear_container">
-                <button @click="getPregunta">Siguiente</button>
-                <h2 id="respuesta">{{mensaje}}</h2>
-
-            </div>
         </div>
-        
+        <h1>⚙️ Opciones ⚙️</h1>
         <Selector @leccion-cambiada="actualizarLeccion" />
+
     </div>
 </template>
 
@@ -61,7 +62,6 @@ export default {
             if(this.leccion_actual == '1'){
                 this.shuffle(this.leccion1)
                 this.preguntas = this.leccion1.slice(0,4)
-                console.log(this.preguntas)
             }
             else if(this.leccion_actual == '2'){
                 this.shuffle(this.leccion2)
@@ -75,33 +75,31 @@ export default {
             this.leccion_cargada = true
     },
     checkAnswer(respuesta){
-        if(this.flag_ronda_terminada){
-            return
-        }
-        else{
-        if(this.tipo_ronda_actual == 'caracter_significado'){
-            if(respuesta == this.pregunta_actual.significado){
-                this.aciertos += 1
-                this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
-            else{
-                this.fallos += 1
-                this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
-        }
-        else{
-            if(respuesta == this.pregunta_actual.caracter){
-                this.aciertos += 1
-                this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
-            else{
-                this.fallos += 1
-                this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
-        }
-
         this.flag_ronda_terminada = true
-    }
+        //TODO: 
+            if(this.tipo_ronda_actual == 'caracter_significado'){
+                if(respuesta == this.pregunta_actual.significado){
+                    this.aciertos += 1
+                    this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                }
+                else{
+                    this.fallos += 1
+                    this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                }
+            }
+            else if(this.tipo_ronda_actual == 'significado_caracter'){
+                if(respuesta == this.pregunta_actual.caracter){
+                    this.aciertos += 1
+                    this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                }
+                else{
+                    this.fallos += 1
+                    this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+                }
+            }
+            
+        
+    
     }
 },
     components: {
@@ -135,16 +133,16 @@ body{
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    width: 100vw;
+    width: 100%;
     background-color: #ff9cf7;
     text-align: center;
-    height: 100vh;
 }
 #respuesta{
     font-size: 30px;
     margin-top: 0px;
     margin-bottom: 15px;
     color: #212121;
+    cursor: pointer;
 }
 #opciones{
     display: flex;
@@ -163,7 +161,8 @@ body{
     border: 6px solid #a0a000;
     margin: 0px;
     min-width: 600px;
-    min-height: 400px;
+    min-height: 46em;
+    margin-bottom: 20px
 }
 #pregunta_actual{
     background-color: #ff00ff  ;
@@ -178,7 +177,18 @@ body{
     margin-bottom: 60px;
     
 }
-
+#respuesta{
+    background-color: #ff00ff  ;
+    color: #212121 ;
+    border: 6px solid #a000a0;
+    box-shadow: 0px 8px 0px #550044;
+    font-size: 50px;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 0px;
+    min-width: 100px;
+    margin-bottom: 60px;
+}
 button{
     margin: 0;
     background-color: #ff00ff;
@@ -200,7 +210,15 @@ button{
         margin: 20px;
     }
     #respuesta{
+        background-color: #ff00ff  ;
+        color: #212121 ;
+        border: 6px solid #a000a0;
+        box-shadow: 0px 8px 0px #550044;
         font-size: 20px;
+        border-radius: 10px;
+        padding: 12px;
+        margin: 20px;
+        min-width: 100px;
     }
     button{
         font-size: 15px;
@@ -213,6 +231,7 @@ button{
         min-width: 300px;
         min-height: 300px;
     }
+    
     
 }
 </style>

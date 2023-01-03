@@ -37,6 +37,7 @@ select{
     box-shadow: 3px 3px 0px #550044;
     border-radius: 12px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 @media screen and (max-width: 600px) {
