@@ -49,7 +49,7 @@ li{
     padding: 10px;
     border-radius: 12px;
     list-style: none;
-    width: 200px;
+    width: 240px;
     text-align: center;
     font-size: 20px;
     background-color: #ff00ff;
@@ -68,7 +68,7 @@ li:active{
 
 @media screen and (max-width: 600px) {
     li{
-        width: 100px;
+        width: 200px;
         margin: 5px;
     }
 }
