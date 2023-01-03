@@ -1,19 +1,21 @@
 <template>
     <div class="page-cointainer">
         <h1 id="kimchichards">🥬 Kimchi Cards 🥬</h1>
-        <Selector @leccion-cambiada="actualizarLeccion" />
-        <div v-if="leccion_cargada">
-            <Puntos :aciertos="aciertos" :fallos="fallos" />
-            <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
-            <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
+        <div class="juego">
+            <div v-if="leccion_cargada">
+                <Puntos :aciertos="aciertos" :fallos="fallos" />
+                <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
+                <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
+            </div>
+            <div v-if="!leccion_cargada">
+                <h2>Selecciona una lección para empezar</h2>
+            </div>
+            <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
+            
+            <h2 v-show="flag_ronda_terminada" id="respuesta">{{mensaje}}</h2>
+            <button v-show="flag_ronda_terminada" @click="getPregunta">Siguiente</button>
+            <Selector @leccion-cambiada="actualizarLeccion" />
         </div>
-        <div v-if="!leccion_cargada">
-            <h2>Selecciona una lección para empezar</h2>
-        </div>
-        <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
-        
-        <h2 v-if="flag_ronda_terminada" id="respuesta">{{mensaje}}</h2>
-        <button v-if="flag_ronda_terminada" @click="getLeccion">Siguiente</button>
 
     </div>
 </template>
@@ -47,12 +49,12 @@ export default {
     methods:{
         actualizarLeccion(nuevaLeccion){
             this.leccion_actual = nuevaLeccion
-            this.getLeccion()
+            this.getPregunta()
         },
         shuffle(array) {
         array.sort(() => Math.random() - 0.5)
             },
-        getLeccion(){
+        getPregunta(){
             this.flag_ronda_terminada = false
             if(this.leccion_actual == '1'){
                 this.shuffle(this.leccion1)
@@ -121,8 +123,8 @@ export default {
 body{
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    margin: 0;
     color: #ff00ff;
+    margin: 0;
     padding: 0;
 }
 
@@ -141,6 +143,15 @@ body{
     margin-bottom: 15px;
     color: #212121;
 }
+#opciones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+}
 #pregunta_actual{
     background-color: #ff00ff  ;
     color: #212121 ;
@@ -151,7 +162,7 @@ body{
     padding: 12px;
     margin: 0px;
     min-width: 100px;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
     
 }
 
