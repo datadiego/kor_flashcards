@@ -90,7 +90,6 @@ export default {
             this.leccion_cargada = true
     },
     checkAnswer(respuesta){
-        const mensaje_aux = `${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
         if(!this.flag_ronda_terminada){
             if(this.tipo_ronda_actual == 'caracter_significado'){
                 if(respuesta == this.pregunta_actual.significado){
@@ -112,7 +111,12 @@ export default {
                     this.estado_respuesta = "incorrecto"
                 }
             }
-            this.mensaje = mensaje_aux
+            if (this.estado_respuesta == "correcto"){
+                this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+            }
+            else{
+                this.mensaje = `¡Incorrecto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+            }
             this.flag_ronda_terminada = true
         }
     }
@@ -175,7 +179,7 @@ body{
     box-shadow: 0px 8px 0px #a0a000;
     border: 6px solid #a0a000;
     margin: 0px;
-    min-width: 600px;
+    width: 600px;
     min-height: 46em;
     margin-bottom: 20px
 }
@@ -190,6 +194,10 @@ body{
     margin: 0px;
     min-width: 100px;
     margin-bottom: 60px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
 }
 #respuesta{
@@ -203,6 +211,10 @@ body{
     margin: 0px;
     min-width: 100px;
     margin-bottom: 60px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 button{
     margin: 0;
@@ -216,10 +228,40 @@ button{
     min-width: 100px;
     margin-bottom: 20px;
 }
+#respuesta_correcta{
+    background-color: #81ffa1  ;
+    color: #212121 ;
+    border: 6px solid #a000a0;
+    box-shadow: 0px 8px 0px #550044;
+    font-size: 30px;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 20px;
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#respuesta_incorrecta{
+    background-color: #ff6a6a  ;
+    color: #212121 ;
+    border: 6px solid #a000a0;
+    box-shadow: 0px 8px 0px #550044;
+    font-size: 30px;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 20px;
+    min-height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
 #kimchicards{
     color: #ffd54f
 }
 @media screen and (max-width: 600px){
+
     #pregunta_actual{
         font-size: 60px;
         margin: 20px;
@@ -233,27 +275,9 @@ button{
         border-radius: 10px;
         padding: 12px;
         margin: 20px;
+        
     }
-    #respuesta_correcta{
-        background-color: #81ffa1  ;
-        color: #212121 ;
-        border: 6px solid #a000a0;
-        box-shadow: 0px 8px 0px #550044;
-        font-size: 30px;
-        border-radius: 10px;
-        padding: 12px;
-        margin: 20px;
-    }
-    #respuesta_incorrecta{
-        background-color: #ff6a6a  ;
-        color: #212121 ;
-        border: 6px solid #a000a0;
-        box-shadow: 0px 8px 0px #550044;
-        font-size: 30px;
-        border-radius: 10px;
-        padding: 12px;
-        margin: 20px;
-    }
+
     button{
         font-size: 15px;
         margin-bottom: 20px;
@@ -262,8 +286,8 @@ button{
         margin:10px;
     }
     #juego{
-        min-width: 300px;
-        min-height: 300px;
+        width: 300px;
+        min-height: 310px;
     }
     
     
