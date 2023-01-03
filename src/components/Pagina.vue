@@ -9,7 +9,8 @@
                     <h2 v-else id="pregunta_actual">{{ pregunta_actual.significado }}</h2>                    
                 </div>
                 <div v-else>
-                    <h2 @click="getPregunta" id="respuesta">{{mensaje}}</h2>
+                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta" >{{mensaje}} </h2>
+                    <p v-else @click="getPregunta" id="respuesta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
                 </div>
             </div>
             <div v-if="!leccion_cargada">
@@ -44,6 +45,8 @@ export default {
             fallos: 0,
             mensaje: "",
             flag_ronda_terminada: false,
+            flag_primera_ronda: true,
+            numero_ronda: 0,
             leccion1: leccion1,
             leccion2: leccion2
             
@@ -58,6 +61,13 @@ export default {
         array.sort(() => Math.random() - 0.5)
             },
         getPregunta(){
+
+            this.numero_ronda += 1
+            console.log(this.numero_ronda)
+            if(this.numero_ronda === 2){
+                this.flag_primera_ronda = false
+            }
+            this.flag_primera_ronda = false
             this.flag_ronda_terminada = false
             if(this.leccion_actual == '1'){
                 this.shuffle(this.leccion1)
@@ -75,8 +85,7 @@ export default {
             this.leccion_cargada = true
     },
     checkAnswer(respuesta){
-        this.flag_ronda_terminada = true
-        //TODO: 
+        if(!this.flag_ronda_terminada){
             if(this.tipo_ronda_actual == 'caracter_significado'){
                 if(respuesta == this.pregunta_actual.significado){
                     this.aciertos += 1
@@ -97,9 +106,8 @@ export default {
                     this.mensaje = `Error! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
                 }
             }
-            
-        
-    
+            this.flag_ronda_terminada = true
+        }
     }
 },
     components: {
