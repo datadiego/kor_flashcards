@@ -68,11 +68,11 @@ export default {
         getPregunta(){
             this.estado_respuesta = "esperando"
             this.numero_ronda += 1
-            console.log(this.numero_ronda)
+
             if(this.numero_ronda === 2){
                 this.flag_primera_ronda = false
             }
-            this.flag_primera_ronda = false
+            // this.flag_primera_ronda = false
             this.flag_ronda_terminada = false
             if(this.leccion_actual == '1'){
                 this.shuffle(this.leccion1)
@@ -89,34 +89,30 @@ export default {
             this.pregunta_actual = this.preguntas[randint]
             this.leccion_cargada = true
     },
+    comprueba_respuesta(respuesta){
+        if(respuesta == this.pregunta_actual.significado){
+            this.aciertos += 1
+            this.estado_respuesta = "correcto"
+            this.mensaje = "¡Correcto!"
+        }
+        else{
+            this.fallos += 1
+            this.estado_respuesta = "incorrecto"
+            this.mensaje = "¡Incorrecto!"
+        }
+    },
+    creaMensaje(){
+        if(this.estado_respuesta == "correcto"){
+            this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+        }
+        else{
+            this.mensaje = `¡Incorrecto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
+        }
+    },
     checkAnswer(respuesta){
         if(!this.flag_ronda_terminada){
-            if(this.tipo_ronda_actual == 'caracter_significado'){
-                if(respuesta == this.pregunta_actual.significado){
-                    this.aciertos += 1
-                    this.estado_respuesta = "correcto"
-                }
-                else{
-                    this.fallos += 1
-                    this.estado_respuesta = "incorrecto"
-                }
-            }
-            else if(this.tipo_ronda_actual == 'significado_caracter'){
-                if(respuesta == this.pregunta_actual.caracter){
-                    this.aciertos += 1
-                    this.estado_respuesta = "correcto"
-                }
-                else{
-                    this.fallos += 1
-                    this.estado_respuesta = "incorrecto"
-                }
-            }
-            if (this.estado_respuesta == "correcto"){
-                this.mensaje = `¡Correcto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
-            else{
-                this.mensaje = `¡Incorrecto! ${this.pregunta_actual.caracter} significa ${this.pregunta_actual.significado}`
-            }
+            this.comprueba_respuesta(respuesta)
+            this.creaMensaje()
             this.flag_ronda_terminada = true
         }
     }
@@ -241,6 +237,8 @@ button{
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    margin-bottom: 60px;
 }
 #respuesta_incorrecta{
     background-color: #ff6a6a  ;
@@ -251,11 +249,12 @@ button{
     border-radius: 10px;
     padding: 12px;
     margin: 20px;
+    margin-bottom: 60px;
     min-height: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
-
+    cursor: pointer;
 }
 #kimchicards{
     color: #ffd54f
@@ -265,6 +264,7 @@ button{
     #pregunta_actual{
         font-size: 60px;
         margin: 20px;
+        margin-bottom: 20px;
     }
     #respuesta{
         background-color: #ff00ff  ;
@@ -275,7 +275,12 @@ button{
         border-radius: 10px;
         padding: 12px;
         margin: 20px;
-        
+    }
+    #respuesta_correcta{
+        margin-bottom: 20px;
+    }
+    #respuesta_incorrecta{
+        margin-bottom: 20px;
     }
 
     button{
