@@ -20,21 +20,27 @@
             <div v-if="!leccion_cargada">
                 <h2>Selecciona una lección para empezar</h2>
             </div>
-            <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
+            <OpcionesRespuesta @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
         </div>
         <h1>⚙️ Opciones ⚙️</h1>
-        <Selector @leccion-cambiada="actualizarLeccion" />
+        <SelectorLeccion @leccion-cambiada="actualizarLeccion" />
+        <SelectorTipoPregunta @leccion-cambiada="actualizarLeccion" />
 
     </div>
 </template>
 
 <script>
-import Selector from './Selector.vue'
-import Opciones from './Opciones.vue'
+import SelectorLeccion from './SelectorLeccion.vue'
+import SelectorTipoPregunta from './SelectorTipoPregunta.vue'
+import OpcionesRespuesta from './OpcionesRespuesta.vue'
 import Puntos from './Puntos.vue'
 
 import leccion1 from '../assets/coreano1.csv'
 import leccion2 from '../assets/coreano2.csv'
+import leccion3 from '../assets/coreano3.csv'
+import leccion4 from '../assets/coreano4.csv'
+import leccion5 from '../assets/coreano5.csv'
+
 export default {
     name: 'Pagina',
     data(){
@@ -43,8 +49,8 @@ export default {
             preguntas: [],
             pregunta_actual: null,
             leccion_cargada: false,
-            tipos_ronda: ['caracter_significado','significado_caracter'],
-            tipo_ronda_actual: null,
+            tipos_ronda: ['aleatorio', 'hangul_español','hangul_coreano','coreano_español', 'coreano_hangul', 'español_hangul', 'español_coreano'],
+            tipo_ronda_actual: 'aleatorio',
             aciertos: 0,
             fallos: 0,
             mensaje: "",
@@ -53,8 +59,11 @@ export default {
             estado_respuesta: "esperando",
             numero_ronda: 0,
             leccion1: leccion1,
-            leccion2: leccion2
-            
+            leccion2: leccion2,
+            leccion3: leccion3,
+            leccion4: leccion4,
+            leccion5: leccion5,
+            lecciones: [leccion1, leccion2, leccion3, leccion4, leccion5],
         }
     },
     methods:{
@@ -72,25 +81,32 @@ export default {
             if(this.numero_ronda === 2){
                 this.flag_primera_ronda = false
             }
-            // this.flag_primera_ronda = false
             this.flag_ronda_terminada = false
-            if(this.leccion_actual == '1'){
-                this.shuffle(this.leccion1)
-                this.preguntas = this.leccion1.slice(0,4)
-            }
-            else if(this.leccion_actual == '2'){
-                this.shuffle(this.leccion2)
-                this.preguntas = this.leccion2.slice(0,4)
+            if(this.tipo_ronda_actual == "aleatorio"){
+                const randint = Math.floor(Math.random() * this.tipos_ronda.length)
+                this.tipo_ronda_actual = this.tipos_ronda[randint]
             }
             else{
-                console.log("Cargamos leccion", this.leccion_actual)
+                if(this.tipo_ronda_actual == "caracter_significado"){
+                    this.tipo_ronda_actual = "significado_caracter"
+                }
+                else{
+                    this.tipo_ronda_actual = "caracter_significado"
+                }
             }
+            for (let i = 0; i < this.lecciones.length; i++) {
+                if(this.leccion_actual == i+1){ 
+                    this.shuffle(this.lecciones[i])
+                    this.preguntas = this.lecciones[i].slice(0,4)
+                }
+            }
+
             const randint = Math.floor(Math.random() * this.preguntas.length)
             this.pregunta_actual = this.preguntas[randint]
             this.leccion_cargada = true
     },
     comprueba_respuesta(respuesta){
-        if(respuesta == this.pregunta_actual.significado){
+        if(respuesta == this.pregunta_actual){
             this.aciertos += 1
             this.estado_respuesta = "correcto"
             this.mensaje = "¡Correcto!"
@@ -118,8 +134,9 @@ export default {
     }
 },
     components: {
-        Selector,
-        Opciones,
+        SelectorLeccion,
+        OpcionesRespuesta,
+        SelectorTipoPregunta,
         Puntos
     },
     beforeMount(){
@@ -166,7 +183,6 @@ body{
     justify-content: center;
     width: 100%;
     height: 100%;
-    margin-top: 20px;
 }
 #juego{
     background-color: rgb(255, 255, 141);
@@ -262,7 +278,7 @@ button{
 @media screen and (max-width: 600px){
 
     #pregunta_actual{
-        font-size: 60px;
+        font-size: 40px;
         margin: 20px;
         margin-bottom: 20px;
     }
