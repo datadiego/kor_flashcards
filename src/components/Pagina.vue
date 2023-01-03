@@ -1,7 +1,7 @@
 <template>
     <div class="page-cointainer">
         <h1 id="kimchichards">🥬 Kimchi Cards 🥬</h1>
-        <div class="juego">
+        <div id="juego">
             <div v-if="leccion_cargada">
                 <Puntos :aciertos="aciertos" :fallos="fallos" />
                 <h2 v-if="tipo_ronda_actual=='caracter_significado'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
@@ -11,12 +11,14 @@
                 <h2>Selecciona una lección para empezar</h2>
             </div>
             <Opciones @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
-            
-            <h2 v-show="flag_ronda_terminada" id="respuesta">{{mensaje}}</h2>
-            <button v-show="flag_ronda_terminada" @click="getPregunta">Siguiente</button>
-            <Selector @leccion-cambiada="actualizarLeccion" />
-        </div>
+            <div v-show="flag_ronda_terminada" class="clear_container">
+                <button @click="getPregunta">Siguiente</button>
+                <h2 id="respuesta">{{mensaje}}</h2>
 
+            </div>
+        </div>
+        
+        <Selector @leccion-cambiada="actualizarLeccion" />
     </div>
 </template>
 
@@ -132,10 +134,11 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    overflow: hidden;
     width: 100vw;
     background-color: #ff9cf7;
     text-align: center;
+    height: 100vh;
 }
 #respuesta{
     font-size: 30px;
@@ -151,6 +154,16 @@ body{
     width: 100%;
     height: 100%;
     margin-top: 20px;
+}
+#juego{
+    background-color: rgb(255, 255, 141);
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0px 8px 0px #a0a000;
+    border: 6px solid #a0a000;
+    margin: 0px;
+    min-width: 600px;
+    min-height: 400px;
 }
 #pregunta_actual{
     background-color: #ff00ff  ;
@@ -176,6 +189,7 @@ button{
     border-radius: 12px;
     padding: 12px;
     min-width: 100px;
+    margin-bottom: 20px;
 }
 #kimchicards{
     color: #ffd54f
@@ -190,9 +204,14 @@ button{
     }
     button{
         font-size: 15px;
+        margin-bottom: 20px;
     }
     h1, h2{
         margin:10px;
+    }
+    #juego{
+        min-width: 300px;
+        min-height: 300px;
     }
     
 }

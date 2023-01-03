@@ -28,7 +28,6 @@ export default {
 <style>
 select{
     min-width: 200px;
-    height: auto;
     font-size: 20px;
     padding: 10px;
     text-align: center;
@@ -37,6 +36,7 @@ select{
     border: 6px solid #a000a0;
     box-shadow: 3px 3px 0px #550044;
     border-radius: 12px;
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 600px) {
