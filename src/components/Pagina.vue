@@ -206,7 +206,6 @@ body{
     border: 6px solid #a0a000;
     margin: 0px;
     width: 600px;
-    min-height: 46em;
     margin-bottom: 20px
 }
 #pregunta_actual{
@@ -321,7 +320,7 @@ button{
         margin:10px;
     }
     #juego{
-        width: 300px;
+        width: 80%;
         min-height: 310px;
     }
     
