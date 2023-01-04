@@ -5,8 +5,7 @@
             <h2 v-if="tipo_ronda_actual=='coreano_español'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
             <h2 v-if="tipo_ronda_actual=='coreano_hangul'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
             <h2 v-if="tipo_ronda_actual=='español_coreano'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
-            <h2 v-if="tipo_ronda_actual=='español_hangul'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
-                               
+            <h2 v-if="tipo_ronda_actual=='español_hangul'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>           
         </div>
         <div v-else-if="estado_respuesta=='correcto'">
             <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_correcta" >{{mensaje}} </h2>
@@ -29,6 +28,11 @@ export default {
         tipo_ronda_actual: String,
         pregunta_actual: Object
     },
+    methods: {
+        getPregunta(){
+            this.$emit('nueva-pregunta')
+        }
+    }
 
 }
 </script>

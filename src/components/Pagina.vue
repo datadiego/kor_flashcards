@@ -10,8 +10,9 @@
                 :estado_respuesta="estado_respuesta" 
                 :numero_ronda="numero_ronda"
                 :tipo_ronda_actual="tipo_ronda_actual" 
-                :pregunta_actual="pregunta_actual" 
-                @click="getPregunta" />
+                :pregunta_actual="pregunta_actual"
+                @nueva-pregunta="getPregunta"
+                 />
             
             </div>
             <div v-if="!leccion_cargada">
@@ -20,7 +21,8 @@
             <OpcionesRespuesta 
             @select="checkAnswer($event)" 
             :opciones_ronda="preguntas" 
-            :tipo_ronda="tipo_ronda_actual"/>
+            :tipo_ronda="tipo_ronda_actual"
+            />
         </div>
         <div>
             <h1>⚙️ Opciones ⚙️</h1>
