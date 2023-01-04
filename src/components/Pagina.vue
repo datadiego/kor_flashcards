@@ -4,28 +4,23 @@
         <div id="juego">
             <div v-if="leccion_cargada">
                 <Puntos :aciertos="aciertos" :fallos="fallos" />
-                <div v-if="estado_respuesta=='esperando'">
-                    <h2 v-if="tipo_ronda_actual=='hangul_coreano'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
-                    <h2 v-if="tipo_ronda_actual=='hangul_español'" id="pregunta_actual">{{ pregunta_actual.caracter }}</h2>
-                    <h2 v-if="tipo_ronda_actual=='coreano_español'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
-                    <h2 v-if="tipo_ronda_actual=='coreano_hangul'" id="pregunta_actual">{{ pregunta_actual.pronunciacion }}</h2>
-                    <h2 v-if="tipo_ronda_actual=='español_coreano'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
-                    <h2 v-if="tipo_ronda_actual=='español_hangul'" id="pregunta_actual">{{ pregunta_actual.significado }}</h2>
-                                       
-                </div>
-                <div v-else-if="estado_respuesta=='correcto'">
-                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_correcta" >{{mensaje}} </h2>
-                    <p v-else @click="getPregunta" id="respuesta_correcta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
-                </div>
-                <div v-else-if="estado_respuesta=='incorrecto'">
-                    <h2 v-if="numero_ronda>1" @click="getPregunta" id="respuesta_incorrecta" >{{mensaje}} </h2>
-                    <p v-else @click="getPregunta" id="respuesta_incorrecta">{{mensaje}}<br/>(Pulsame para ir a la siguiente pregunta)</p>
-                </div>
+                
+                <PreguntaResultado 
+                :mensaje="mensaje" 
+                :estado_respuesta="estado_respuesta" 
+                :numero_ronda="numero_ronda"
+                :tipo_ronda_actual="tipo_ronda_actual" 
+                :pregunta_actual="pregunta_actual" 
+                @click="getPregunta" />
+            
             </div>
             <div v-if="!leccion_cargada">
                 <h2>Selecciona una lección para empezar</h2>
             </div>
-            <OpcionesRespuesta @select="checkAnswer($event)" :opciones_ronda="preguntas" :tipo_ronda="tipo_ronda_actual"/>
+            <OpcionesRespuesta 
+            @select="checkAnswer($event)" 
+            :opciones_ronda="preguntas" 
+            :tipo_ronda="tipo_ronda_actual"/>
         </div>
         <div>
             <h1>⚙️ Opciones ⚙️</h1>
@@ -41,6 +36,7 @@
 import SelectorLeccion from './SelectorLeccion.vue'
 import SelectorTipoPregunta from './SelectorTipoPregunta.vue'
 import OpcionesRespuesta from './OpcionesRespuesta.vue'
+import PreguntaResultado from './PreguntaResultado.vue'
 import Puntos from './Puntos.vue'
 
 import leccion1 from '../assets/coreano1.csv'
@@ -151,7 +147,8 @@ export default {
         SelectorLeccion,
         OpcionesRespuesta,
         SelectorTipoPregunta,
-        Puntos
+        Puntos,
+        PreguntaResultado,
     },
     beforeMount(){
         const randint = Math.floor(Math.random() * this.tipos_ronda.length)
@@ -182,6 +179,7 @@ body{
     width: 100%;
     background-color: #ff9cf7;
     text-align: center;
+    min-height: 100vh;
 }
 #respuesta{
     font-size: 30px;
