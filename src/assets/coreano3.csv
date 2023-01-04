@@ -1,12 +1,10 @@
 caracter,pronunciacion,significado,id
-ㅏㅣ,ae,padre,1
-ㅓㅣ,eo,madre,2
-ㅗ,o,hermano mayor,3
-ㅜ,u,hermano menor,4
-ㅏ,a,esposo,5
-ㅑ,ya,esposa,6
-ㅡ,eu,"hijo, hija",7
-ㅔ,e,"nieto, nieta",8
-ㅚ,oe,"abuelo, abuela",9
-ㅘ,wa,"tío, tía",10
-ㅝ,wo,"sobrino, sobrina",11
+가족,gajok,familia,1
+아버지,abeoji,padre,2
+어머니,eomeoni,madre,3
+남동생,namdongsaeng,hermano menor,4
+여동생,yeodongsaeng,hermana menor,5
+아들,adul,hijo,6
+딸,ttal,hija,7
+할아버지,harabeoji,abuelo,8
+할머니,halmeoni,abuela,9
